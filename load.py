@@ -8,7 +8,7 @@ def load_data():
     """
     加载WESAD数据集中的数据
     """
-    print("load data begin!")
+    print("load WESAD begin!")
 
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
@@ -57,14 +57,27 @@ def load_data():
             emg:np.ndarray = data['signal']['chest']['EMG']
             eda:np.ndarray = data['signal']['chest']['EDA']
             resp:np.ndarray = data['signal']['chest']['Resp']
+            temp:np.ndarray = data['signal']['chest']['Temp']
+            ecg:np.ndarray = data['signal']['chest']['ECG']
+            bvp:np.ndarray = data['signal']['wrist']['BVP']
+            eda_wrist:np.ndarray = data['signal']['wrist']['EDA']
+            temp_wrist:np.ndarray = data['signal']['wrist']['TEMP']
             signal = {
                 'emg': emg[:, 0],
                 'eda': eda[:, 0],
                 'resp': resp[:, 0],
+                'temp': temp[:, 0],
+                'ecg': ecg[:, 0],
+                'bvp': bvp[:, 0],
+                'eda_wrist': eda_wrist[:, 0],
+                'temp_wrist': temp_wrist[:, 0],
                 'label': label[:]
             }
             target.append(signal)
         print(f"\rProcessing: {i+1}/{len(pkl_list)} ({((i+1)/len(pkl_list))*100:.1f}%)", end="")
+        # break # 先来一个
     print("")
     return target
 
+if __name__ == '__main__':
+    load_data()
